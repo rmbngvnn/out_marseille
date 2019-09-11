@@ -1,0 +1,53 @@
+<div class="bodyhome2 d-flex flex-column">
+  <div class="background-pourvous"></div>
+  <div class="logo mx-auto">
+    <p class="out">OUT</p>
+  </div>
+  <p class="pourvous mt-2">POUR VOUS</p>
+  <div class="text-center">
+  <!-- <div class="color-line-top2 d-flex flex-column"></div> -->
+  <div class="ses_prochains_events_discover d-flex justify-content-start" style="height: 30px;">
+    <div class="taille_texte2" style="z-index: 1; ">Selectionnés pour vous</div>
+  </div>
+  <p class="lign-chapiter2" style="left: 0px;"></p>
+
+    <div class="d-flex flex-column justify-content-center" style="position: relative;top: 330px;">
+      <% @events.order(date: 'asc').each do |event| %>
+      <%= link_to(event_path(event.id)) do %>
+        <% if event.date < (Date.today + 7.day) %>
+          <div class="card-next-event-discover" style="position: relative;left: -20px;">
+            <div class="color-line-next-event-discover">
+            </div>
+            <div class="img_next_event" style="background-image: url(<%=asset_path(event.photo)%>); background-position: center; background-size: cover;"></div>
+            <h3 class="title-event"><%= event.title.gsub(/^(.{25,}?).*$/m,'\1') %></h3>
+            <p class="title-text-event-discover"><%= event.title.gsub(/^(.{12,}?).*$/m,'\1') %></p>
+            <p class="text-next-event">
+           <%= event.category %><% artist_category_array_home = [] %>
+                  <% event.artists.each do |artist| %>
+                    <% unless artist_category_array_home.include?(artist.category + " ") %>
+                      <% artist_category_array_home << artist.category + " " %>
+                    <% end %>
+                  <% end %>
+                  <% if artist_category_array_home.length > 2 %>
+                    <%= artist_category_array_home.first(1).join %>...
+                  <% else %>
+                    <%= artist_category_array_home.join %>
+                  <% end %><br>
+
+               <% adresse_for_card = event.place.address %>
+                <% if adresse_for_card.length > 12 %>
+                  <%= adresse_for_card[0..16]%>
+                <% else %>
+                  <%= event.place.address %>
+                <% end %> </p>
+            <div class="card-next-event-date-last d-flex flex-column">
+              <% p= event.date %>
+              <h2><%= p.strftime('%d') %></h2>
+              <h3> <%= p.strftime('%b') %> </h3>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+      <% end %>
+    </div>
+  </div>

@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <!-- Le h3 ne fonctionne plus, corriger l'erreur -->
+  <h4 class="modal-title" id="myModalLabel">Vous n'êtes pas inscrit</h4>
+  <!-- <button type="button" class="close" data-dismiss="modal">x</button> -->
+</div>
+<%= form_for(:user, :url => session_path(:user)) do |f| %>
+  <div class="modal-body">
+      <h6 class="modal-title" id="myModalLabel">Connectez vous</h6>
+      <p></p>
+      <%= f.text_field :email, placeholder: "email", class: "email-text"  %>
+      <%= f.password_field :password, placeholder: "password", class: "password-text"%>
+      <p></p>
+      <%= link_to " ", new_password_path(:user) %>
+      <%= f.submit 'Login', class: "btn btn-primary" %>
+  </div>
+  <div class="modal-footer d-flex justify-content-between">
+    <h6 class="modal-title" id="myModalLabel">Créer un compte</h6>
+    <%= link_to 'inscription', new_user_registration_path, class: 'btn btn-warning' %>
+  </div>
+<% end %>

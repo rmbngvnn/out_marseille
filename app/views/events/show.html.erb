@@ -1,0 +1,77 @@
+  <div class="artist_image" style="background-image: url(<%=asset_path(@event.photo)%>);"></div>
+  <div class="description_event ml-4 my-4">
+    <p class="artist_name2">
+      <%= @event.title.upcase.gsub(/^(.{20,}?).*$/m,'\1') %>
+    </p>
+    <div class="d-flex">
+      <p class="align-self-center mb-0 event_category"><%= @event.category %> -
+        <% artist_category_array = [] %>
+        <% @event.artist_participations.each do |artist_participation| %>
+          <% unless artist_category_array.include?(artist_participation.artist.category) %>
+            <%= artist_participation.artist.category %>
+            <% artist_category_array << artist_participation.artist.category %>
+          <% end %>
+        <% end %>
+        </p>
+    </div>
+    <div class="event_place d-flex">
+      <p class="align-self-center mb-0  event_category"><%= @event.place.name %></p>
+    </div>
+    <div class="event_hour d-flex">
+      <% start_time = @event.start_time %>
+      <% end_time = @event.end_time %>
+      <p class="align-self-center mb-0  event_category"><%= start_time.strftime('%R') %> - <%= end_time.strftime('%R') %></p>
+    </div>
+    <div class="event_price d-flex">
+      <p class="align-self-center mb-0 event_category"><%= @event.price == 0 ? "gratuit" : "#{@event.price} €" %></p>
+    </div>
+  </div>
+  <div class="card-next-event-date-last d-flex flex-column" style="top: 210px;right: 0px;">
+    <% p= @event.date %>
+    <h2 style="left: 9px;top: -2px;"><%= p.strftime('%d') %></h2>
+    <h3 style="top: 11px;position: relative;left: 22px;"> <%= p.strftime('%b') %> </h3>
+  </div>
+  <div class="background-artist" style="top: 600px;background-color: black;"></div>
+  <div class="ses_prochains_events d-flex justify-content-start mt-3" style="height: 30px;">
+    <div class="taille_texte mt-4" style="z-index: 1;" >Artistes de l'évènement</div>
+  </div>
+    <p class="lign-chapiter2 mt-4 mb-4" > </p>
+      <ul class="hs2">
+        <% @event.artists.each do |artist| %>
+          <% unless artist.name.match?("Résident") %>
+            <li class="li_height mb-5">
+            <%= link_to(artist_path(artist.id)) do %>
+              <div class="card-artist mt-4 mb-5 mr-3">
+                <div class="img_artist-card" style="background-image: url(<%=asset_path(artist.photo)%>); background-position: center; background-size: cover;"></div>
+              </div>
+              <% end %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+
+  <div class="mx-4" style="color: white;"><%= @event.description %></div>
+
+  <% particip_id = nil %>
+  <!-- Si l'utilisateur participe déjà à l'évènement -->
+  <% if @event.users.include?(current_user) %>
+
+    <!-- Recuperation du (ou des) user_participation ID dont le id_user correspond au current_user -->
+    <% @event.user_participations.each do |user_participation| %>
+      <% if user_participation.user.email == current_user.email %>
+        <% particip_id = user_participation.id %>
+      <% end %>
+    <% end %>
+
+    <!-- On supprime la bonne participation avec le bouton se désister -->
+    <%= link_to "Plus interessé", event_user_participation_path(@event, particip_id), method: :delete, data: { confirm: "Etes vous sûr?" }, class: "btn_non ml-4", style: "margin-bottom: 20px;" %>
+
+  <% else %>
+
+    <!-- On participe à l'évènement  -->
+    <%= link_to "Intéressé", event_user_participations_path(@event), method: :create, class: "btn_oui ml-4", style: "margin-bottom: 20px;" %>
+  <% end %>
+  <!-- On ajoute un bouton pour acheter une prévente -->
+  <%= link_to "Acheter un ticket", @event.buy_link, class: "btn_buy ml-4", style: "margin-bottom: 20px;" %>
+  <div style="margin-bottom: 80px;"></div>
+</div>
