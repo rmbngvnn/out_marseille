@@ -2,40 +2,30 @@
   <div class="logo mx-auto mt-5 mb-4">
     <p class="out">OUT</p>
   </div>
-  <p class="marseille">MARSEILLE</p>
+  <p class="marseille mb-4 mt-2">MARSEILLE</p>
   <div class="color-line-top d-flex mb-3"></div>
   <div class="ses_prochains_events d-flex justify-content-start" style="height: 30px;">
-    <p class="taille_texte mb-2" style="position: relative;left: -70px;">évènements ce soir</p>
+    <p class="taille_texte mb-2 mt-3" style="position: relative;left: -31px;">évènements ce soir</p>
   </div>
-  <p class="lign-chapiter-event-cesoir mb-3" style="left: 0px;"> </p>
+  <p class="lign-chapiter-event-cesoir mb-3 mt-4" style="left: 0px;"> </p>
 
     <div class="app" style="margin-top: 0px;">
       <ul class="hs">
         <%# events_sorted = @events.sort_by {|obj| obj.start_time} %>
         <% @events.order(start_time: 'asc').each do |event| %>
-          <% if event.date == Date.today %>
+          
             <li>
             <%= link_to(event_path(event.id)) do %>
               <div class="card-event ml-2">
               <div class="color-line-event"> </div>
               <div class="img_event" style="background-image: url(<%=asset_path(event.photo)%>); background-position: center; background-size: cover;"></div>
-              <h3 class="title-event"><%= event.title.gsub(/^(.{25,}?).*$/m,'\1') %></h3>
-              <p class="title-text-event"><%= event.title.gsub(/^(.{12,}?).*$/m,'\1') %></p>
-              <p class="text-event"> <%= event.category %> -
-                <% artist_category_array_home = [] %>
-                <% event.artists.each do |artist| %>
-                  <% unless artist_category_array_home.include?(artist.category + " ") %>
-                    <% artist_category_array_home << artist.category + " " %>
-                  <% end %>
-                <% end %>
-                <% if artist_category_array_home.length > 1 %>
-                  <%= artist_category_array_home.first(1).join.gsub(/^(.{6,}?).*$/m,'\1') %>
-                <% else %>
-                  <%= artist_category_array_home.join.gsub(/^(.{6,}?).*$/m,'\1') %>
-                <% end %><br>
+              <h3 class="title-event"><%= event.title.gsub(/^(.{26,}?).*$/m,'\1') %></h3>
+            
+              <p class="text-event"> <%= event.category %>
+                <% artist_category_array_home = [] %> <br>
                 <% placename_for_card = event.place.name%>
-                <% if placename_for_card.length > 12 %>
-                  <%= placename_for_card[0..12]%>
+                <% if placename_for_card.length > 122 %>
+                  <%= placename_for_card%>
                 <% else %>
                   <%= event.place.name%>
                 <% end %>
@@ -48,20 +38,20 @@
               </div>
             <% end %>
             </li>
-          <% end %>
+
         <% end %>
       </ul>
   <div class="background-artist"></div>
-      <div class="ses_prochains_events d-flex justify-content-start mt-3" style="height: 30px;">
-    <div class="taille_texte mt-4" style="z-index: 1;" >artistes du moment</div>
+      <div class="ses_prochains_events d-flex justify-content-start mt-4" style="height: 30px;">
+    <div class="taille_texte mt-4" style="z-index: 1; color: black;" >artistes du moment</div>
   </div>
-    <p class="lign-chapiter2 mt-4 mb-4" > </p>
+    <p class="lign-chapiter2 mt-4 mb-4" style="border: 1.2px solid black;" > </p>
       <ul class="hs2">
         <% @artists.first(15).each do |artist| %>
           <% unless artist.name.match?("Résident") %>
             <li class="li_height mb-5">
             <%= link_to(artist_path(artist.id)) do %>
-              <div class="card-artist mt-4 mb-5 mr-3">
+              <div class="card-artist mt-4 mb-5 mr-4 ml-3">
                 <div class="img_artist-card" style="background-image: url(<%=asset_path(artist.photo)%>); background-position: center; background-size: cover;"></div>
               </div>
               <% end %>
@@ -75,10 +65,10 @@
   <div class="text-center">
     <div class="ses_prochains_events d-flex justify-content-start" style="height: 30px;">
 
-      <div class="taille_texte mb-2 mt-5" style="position: relative; top: -240px; left: -5px;">évènements à venir</div>
+      <div class="taille_texte mb-2 mt-5" style="position: relative; top: -234px; left: -38px;">évènements à venir</div>
 
     </div>
-    <p class="lign-chapiter3 my-2" style="position: relative; left: 35px;top: -195px;"> </p>
+    <p class="lign-chapiter3 my-2" style="position: relative; left: 0px;top: -188px;"> </p>
     <div class="d-flex flex-column">
       <% @events.order(date: 'asc').each do |event| %>
       <%= link_to(event_path(event.id)) do %>

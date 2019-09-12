@@ -1,5 +1,5 @@
 body {
-	background: #5B5B5B;
+	background: white;
 }
 
 .marseille {
@@ -201,9 +201,9 @@ top: 55px;
 
 
 .text-event{
-  position: relative;
-  width: 114px;
-  height: 58px;
+  position: absolute;
+  width: 123px;
+  height: 47px;
   left: -20px;
   bottom: -50px;
   font-family: Avenir Next;
@@ -212,8 +212,11 @@ top: 55px;
   font-size: 15px;
   line-height: 28px;
   text-align: right !important;
-  color: #A0A0A0;
+  vertical-align: text-bottom !important;
+  color: white;
+  letter-spacing: 1px;
 }
+
 
 .title-text-event {
   position: absolute;
@@ -353,20 +356,20 @@ top: -43px;
 }
 
 .img_artist-card {
-width: 136px;
-height: 137px;
+width: 160px;
+height: 160px;
 	position: absolute;
 	border-radius: 3px;
-  margin-top: 12px;
+  margin-top: 17px;
 }
 
 .background-artist {
   position: absolute;
-width: 374px;
-height: 270px;
+width: 100%;
+height: 278px;
 left: 0px;
-top: 450px;
-background: #5B5B5B;
+top: 495px;
+background: white;
 border-radius: 19px;
 z-index: 0;
 }
