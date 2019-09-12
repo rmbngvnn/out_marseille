@@ -1,15 +1,14 @@
 <div class="bodydash d-flex flex-column">
-  <div class="background-dash-top"></div>
+  <div class="background-dash-top" style="height: 725px;"></div>
   <div class="logo mx-auto mt-5 mb-4 " style="z-index: 1;">
     <p class="out" style="z-index: 1;">OUT</p>
   </div>
-  <p class="marseille " style="z-index: 1;">F R A N C K</p>
+  <p class="marseille " style="z-index: 1;">Vous</p>
   <div class="color-line-top d-flex mb-3" style="z-index: 1;"></div>
   <div class="d-flex justify-content-end" style="width:100%; z-index: 1">
   <%= link_to 'DECONNEXTION', destroy_user_session_path, class: "btn_deconnexion mt-2 mr-5", style: 'text-decoration: none !important;', method: :delete, data: { confirm: 'Are you sure?' } %>
   <!-- <button class="btn_deconnexion"><p>Deconnexion</p></button> -->
 </div>
-  <div class="avatar-large mt3" style="background-image: url(<%=asset_path('franckphoto')%>); z-index: 1"></div>
   <div class="ses_prochains_events d-flex flex-row align-items-center justify-content-start" style="width: 80%; margin-top: 20px;">
     <div class="taille_texte" style="z-index: 1;">vos styles</div>
   </div>
@@ -51,25 +50,8 @@
               <div class="color-line-event"> </div>
               <div class="img_event" style="background-image: url(<%=asset_path(user_participation.event.photo)%>); background-position: center; background-size: cover;"></div>
               <h3 class="title-event"><%= user_participation.event.title.gsub(/^(.{25,}?).*$/m,'\1') %></h3>
-              <p class="title-text-event"><%= user_participation.event.title.gsub(/^(.{12,}?).*$/m,'\1') %></p>
-              <p class="text-event"><%= user_participation.event.category %> -
-                <% artist_category_array_home = [] %>
-                <% user_participation.event.artists.each do |artist| %>
-                  <% unless artist_category_array_home.include?(artist.category + " ") %>
-                    <% artist_category_array_home << artist.category + " " %>
-                  <% end %>
-                <% end %>
-                <% if artist_category_array_home.length > 1 %>
-                  <%= artist_category_array_home.first(1).join %>...
-                <% else %>
-                  <%= artist_category_array_home.join %>
-                <% end %><br>
-                <% adresse_for_card = user_participation.event.place.address %>
-                <% if adresse_for_card.length > 14 %>
-                  <%= adresse_for_card[0..14]%>
-                <% else %>
-                  <%= user_participation.event.place.address %>
-                <% end %>
+              <p class="text-event" style="height: auto;"><%= user_participation.event.category %> <br>
+                <%= user_participation.event.place.address %>
                 </p>
                 <div class="card-next-event-date-last-user d-flex flex-column">
               <% p= user_participation.event.date %>
@@ -83,17 +65,16 @@
       </ul>
       <div class="background-artist-prefere"></div>
   <div class="ses_prochains_events d-flex justify-content-start mt-5" style="height: 30px;">
-    <div class="taille_texte" style="margin-top: 20px;">vos artistes préférés</div>
+    <div class="taille_texte" style="margin-top: 20px; color: black;">vos artistes préférés</div>
   </div>
-  <p class="lign-chapiter-vosartistes" style="margin-top: 20px;"> </p>
+  <p class="lign-chapiter-vosartistes" style="margin-top: 20px; border-color: black;"> </p>
   <ul class="hs2">
     <% current_user.find_liked_items.each do |artist| %>
       <li class="li_height">
       <% unless artist.name.match?("Résident") %>
         <%= link_to(artist_path(artist.id)) do %>
-          <div class="card-artist mt-5">
-            <h3 class="card-title-artist"> <%= artist.name %></h3>
-             <div class="img_artist-card" style="background-image: url(<%=asset_path(artist.photo)%>); background-position: center; background-size: cover;"></div>
+          <div class="card-artist mt-5 mx-3">
+             <div class="img_artist-card mr-5" style="background-image: url(<%=asset_path(artist.photo)%>); background-position: center; background-size: cover;"></div>
           </div>
           <% end %>
         <% end %>
@@ -101,7 +82,7 @@
     <% end %>
   </ul>
 
-  <div class="bodyhomeanciens">
+  <div class="bodyhomeanciens" style="width: 100%; height: 110%;">
   <div class="text-center" style="top: 0px;position: relative;">
     <div class="ses_anciens_events d-flex justify-content-start" style="height: 30px;">
 
@@ -110,33 +91,17 @@
     </div>
     <p class="lign-chapiter3 mt-3" style="position: relative; left: 35px;top: 30px;"> </p>
     <div class="d-flex flex-column">
-      <% @events.order(date: 'asc').each do |event| %>
+      <% @events.order(date: 'asc').first(3).each do |event| %>
       <%= link_to(event_path(event.id)) do %>
-        <% if event.date < (Date.today) %>
+        <% if event.date < (Date.today) || event.date > (Date.today) %>
           <div class="card-next-event ml-5 mb-3" style="position: relative;left: -15px;top: 60px;">
             <div class="color-line-next-event">
             </div>
             <div class="img_next_event" style="background-image: url(<%=asset_path(event.photo)%>); background-position: center; background-size: cover; filter: grayscale(80%); "></div>
             <h3 class="title-event"><%= event.title.gsub(/^(.{25,}?).*$/m,'\1') %></h3>
-            <p class="title-text-event4"><%= event.title.gsub(/^(.{12,}?).*$/m,'\1') %></p>
-            <p class="text-next-event">
-              <%= event.category %> -<% artist_category_array_home = [] %>
-                  <% event.artists.each do |artist| %>
-                    <% unless artist_category_array_home.include?(artist.category + " ") %>
-                      <% artist_category_array_home << artist.category + " " %>
-                    <% end %>
-                  <% end %>
-                  <% if artist_category_array_home.length > 1 %>
-                    <%= artist_category_array_home.first(1).join.gsub(/^(.{5,}?).*$/m,'\1') %>
-                  <% else %>
-                    <%= artist_category_array_home.join %>
-                  <% end %><br>
-              <% placename_for_card = event.place.name %>
-                <% if placename_for_card.length > 12 %>
-                  <%= placename_for_card[0..12]%>
-                <% else %>
-                  <%= event.place.name %>
-                <% end %> </p>
+            <p class="text-next-event" style="height: auto;">
+              <%= event.category %> <br>
+                  <%= event.place.name %></p>
             <div class="card-next-event-date-last d-flex flex-column">
               <% p= event.date %>
               <h2><%= p.strftime('%d') %></h2>

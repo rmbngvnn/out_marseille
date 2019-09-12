@@ -1,9 +1,9 @@
 <div class="bodyhome2 d-flex flex-column">
-  <div class="background-pourvous"></div>
-  <div class="logo mx-auto">
-    <p class="out">OUT</p>
+  <div class="background-pourvous" style="height: 1250px;"></div>
+  <div class="logo mx-auto" style="border-color: black;">
+    <p class="out" style="color: black;">OUT</p>
   </div>
-  <p class="pourvous mt-2">POUR VOUS</p>
+  <p class="pourvous mt-2" style="color: black;">POUR VOUS</p>
   <div class="text-center">
   <!-- <div class="color-line-top2 d-flex flex-column"></div> -->
   <div class="ses_prochains_events_discover d-flex justify-content-start" style="height: 30px;">
@@ -12,7 +12,7 @@
   <p class="lign-chapiter2" style="left: 0px;"></p>
 
     <div class="d-flex flex-column justify-content-center" style="position: relative;top: 330px;">
-      <% @events.order(date: 'asc').each do |event| %>
+      <% @events.order(date: 'asc').first(5).each do |event| %>
       <%= link_to(event_path(event.id)) do %>
         <% if event.date < (Date.today + 7.day) %>
           <div class="card-next-event-discover" style="position: relative;left: -20px;">

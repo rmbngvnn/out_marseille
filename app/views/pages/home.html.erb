@@ -13,14 +13,14 @@
       <ul class="hs">
         <%# events_sorted = @events.sort_by {|obj| obj.start_time} %>
         <% @events.order(start_time: 'asc').each do |event| %>
-          
+
             <li>
             <%= link_to(event_path(event.id)) do %>
-              <div class="card-event ml-2">
+              <div class="card-event mr-3">
               <div class="color-line-event"> </div>
               <div class="img_event" style="background-image: url(<%=asset_path(event.photo)%>); background-position: center; background-size: cover;"></div>
               <h3 class="title-event"><%= event.title.gsub(/^(.{26,}?).*$/m,'\1') %></h3>
-            
+
               <p class="text-event"> <%= event.category %>
                 <% artist_category_array_home = [] %> <br>
                 <% placename_for_card = event.place.name%>
@@ -72,7 +72,7 @@
     <div class="d-flex flex-column">
       <% @events.order(date: 'asc').each do |event| %>
       <%= link_to(event_path(event.id)) do %>
-        <% if event.date < (Date.today + 30.day) && event.date > Date.today %>
+        <% if event.date < (Date.today + 30.day) || event.date > Date.today %>
           <div class="card-next-event ml-5 mb-3" style="position: relative;left: -15px;top: -180px;">
             <div class="color-line-next-event">
             </div>

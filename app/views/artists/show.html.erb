@@ -1,13 +1,13 @@
   <div class="artist_image" style="background-image: url(<%=asset_path(@artist.photo)%>);"></div>
-  <p class="artist_name text-center">
+  <p class="artist_name text-center" style="color: black;">
     <%= @artist.name.upcase %>
     <% if current_user.voted_for? @artist %>
       <%= link_to unlike_artist_path(@artist), method: :put do %>
-        <%= image_tag "like_full.png", size: "30x30", style: "position: relative;left: 40px;"%>
+        <%= image_tag "like (1).svg", size: "30x30", style: "position: relative;left: 40px;"%>
       <% end %>
     <% else %>
       <%= link_to like_artist_path(@artist), method: :put do %>
-        <%= image_tag "like.png", size: "30x30", style: "position: relative; left: 6px; bottom: 4px;"%>
+        <%= image_tag "like.svg", size: "30x30", style: "position: relative; left: 6px; bottom: 4px;"%>
       <% end %>
     <% end %>
   </p>
@@ -64,7 +64,7 @@
 <!-- ----------------------------------------------- -->
 
 <% if @artist.spotify_link != nil %>
-  <iframe style="margin-top: 25px;position: absolute;bottom: -220px;" width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src=<%= @artist.spotify_link %>></iframe>
+  <iframe style="margin-top: 25px;position: absolute;bottom: -260px; border-radius: 5%;" width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src=<%= @artist.spotify_link %>></iframe>
 <% end %>
 
 
